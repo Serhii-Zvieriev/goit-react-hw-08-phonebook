@@ -1,66 +1,68 @@
-// import { useEffect, useState } from "react";
-// import { useHistory, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+// import { contactsOperations } from "../redux/contacts/contacts-operetions";
 
-// import MoviesList from "../components/MoviesList/MoviesList";
-// import * as fetchMovie from "../services/themoviedb-api";
-
-import "./pageStyles.css";
+const styles = {
+  // form: {
+  //   width: 320,
+  // },
+  label: {
+    display: "flex",
+    flexDirection: "column",
+    marginBottom: 15,
+  },
+};
 
 export default function LoginPage() {
-  // const [inputValue, setInputValue] = useState("");
-  // const [movies, setMovies] = useState(null);
-  // const history = useHistory();
-  // const location = useLocation();
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  // const searchQueary = new URLSearchParams(location.search).get("query");
+  const handleChange = ({ target: { name, value } }) => {
+    switch (name) {
+      case "email":
+        return setEmail(value);
+      case "password":
+        return setPassword(value);
+      default:
+        return;
+    }
+  };
 
-  // useEffect(() => {
-  //   if (searchQueary) {
-  //     fetchMovie
-  //       .fetchSearchMovie(searchQueary)
-  //       .then(({ results }) => setMovies(results));
-  //     setInputValue(searchQueary);
-  //   }
-  // }, [searchQueary]);
-
-  // const handleChange = ({ target }) => {
-  //   setInputValue(target.value.toLowerCase());
-  // };
-
-  // const onSubmit = (event) => {
-  //   event.preventDefault();
-  //   if (inputValue.trim()) {
-  //     fetchMovie
-  //       .fetchSearchMovie(inputValue)
-  //       .then(({ results }) => setMovies(results));
-
-  //     history.push({ ...history.location, search: `?query=${inputValue}` });
-  //   } else {
-  //     alert("Введите корректное название фильма");
-  //   }
-  // };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // dispatch(authOperations.logIn({ email, password }));
+    setEmail("");
+    setPassword("");
+  };
 
   return (
-    <>
-      {/* <form onSubmit={onSubmit}>
-        <input
-          className="input"
-          name="inputValue"
-          value={inputValue}
-          onChange={handleChange}
-          type="text"
-          autoComplete="off"
-          autoFocus
-          placeholder="Search movies"
-        />
+    <div>
+      <h1>Страница логина</h1>
 
-        <button className="btn" type="submit">
-          <span>Search</span>
-        </button>
+      <form onSubmit={handleSubmit} style={styles.form} autoComplete="off">
+        <label style={styles.label}>
+          Почта
+          <input
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleChange}
+          />
+        </label>
+
+        <label style={styles.label}>
+          Пароль
+          <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleChange}
+          />
+        </label>
+
+        <button type="submit">Войти</button>
       </form>
-
-      <MoviesList movies={movies} /> */}
-      LoginPage
-    </>
+    </div>
   );
 }

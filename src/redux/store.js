@@ -13,15 +13,17 @@ import {
 import storage from "redux-persist/lib/storage";
 
 import { contactsReducer } from "./contacts/contacts-redusers";
+import { authReducer } from "./auth/auth-redusers";
 
 const persistConfig = {
-  key: "contacts",
+  key: "auth",
   storage,
-  blacklist: ["filter"],
+  whitelist: ["token"],
 };
 
 const rootReducer = combineReducers({
-  contacts: persistReducer(persistConfig, contactsReducer),
+  auth: persistReducer(persistConfig, authReducer),
+  contacts: contactsReducer,
 });
 
 const middleware = [
@@ -42,8 +44,12 @@ export const persistor = persistStore(store);
 
 //============ STOR =============
 // {
+//     auth: user: { name: null, email: null },
+//       token: null,
+//       isLoggedIn: false,,
 //     contacts: {
 //       items: [],
-//       filter: ''
+//       filter: '',
+//       loading
 //     }
 //   }

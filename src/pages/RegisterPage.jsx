@@ -1,17 +1,77 @@
-// import { useState, useEffect } from "react";
-// import * as fetchMovie from "../services/themoviedb-api";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { register } from "../redux/auth/auth-operetions";
 
-// import MoviesList from "../components/MoviesList/MoviesList";
+const styles = {
+  // form: {
+  //   width: 320,
+  // },
+  label: {
+    display: "flex",
+    flexDirection: "column",
+    marginBottom: 15,
+  },
+};
 
 export default function RegisterPage() {
-  // const [movies, setMovies] = useState(null);
+  const dispatch = useDispatch();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  // useEffect(() => {
-  //   fetchMovie
-  //     .fetchTrendingMovie()
-  //     .then((moviesArr) => setMovies(moviesArr.results));
-  // }, []);
+  const handleChange = ({ target: { name, value } }) => {
+    switch (name) {
+      case "name":
+        return setName(value);
+      case "email":
+        return setEmail(value);
+      case "password":
+        return setPassword(value);
+      default:
+        return;
+    }
+  };
 
-  // return <MoviesList movies={movies} />;
-  return <div>RegisterPage</div>;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(register({ name, email, password }));
+    setName("");
+    setEmail("");
+    setPassword("");
+  };
+
+  return (
+    <div>
+      <h1>Страница регистрации</h1>
+
+      <form onSubmit={handleSubmit} style={styles.form} autoComplete="off">
+        <label style={styles.label}>
+          Имя
+          <input type="text" name="name" value={name} onChange={handleChange} />
+        </label>
+
+        <label style={styles.label}>
+          Почта
+          <input
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleChange}
+          />
+        </label>
+
+        <label style={styles.label}>
+          Пароль
+          <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleChange}
+          />
+        </label>
+
+        <button type="submit">Зарегистрироваться</button>
+      </form>
+    </div>
+  );
 }

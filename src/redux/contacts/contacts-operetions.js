@@ -59,5 +59,3 @@ export const addContact = (text) => async (dispatch) => {
     dispatch(addContactError(error));
   }
 };
-
-// export default (fetchContacts, deleteContact, addContact);
