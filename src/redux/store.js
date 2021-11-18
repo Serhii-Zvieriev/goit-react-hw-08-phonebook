@@ -44,9 +44,11 @@ export const persistor = persistStore(store);
 
 //============ STOR =============
 // {
-//     auth: user: { name: null, email: null },
+//     auth: {
+//       user: { name: null, email: null },
 //       token: null,
-//       isLoggedIn: false,,
+//       isLoggedIn: false,
+//       },
 //     contacts: {
 //       items: [],
 //       filter: '',

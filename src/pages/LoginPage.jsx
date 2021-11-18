@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-// import { contactsOperations } from "../redux/contacts/contacts-operetions";
+import { login } from "../redux/auth/auth-operetions";
 
 const styles = {
   // form: {
@@ -31,7 +31,7 @@ export default function LoginPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatch(authOperations.logIn({ email, password }));
+    dispatch(login({ email, password }));
     setEmail("");
     setPassword("");
   };

@@ -2,9 +2,17 @@ import {
   registerRequest,
   registerSuccses,
   registerError,
+  loginRequest,
+  loginSuccses,
+  loginError,
+  logoutRequest,
+  logoutSuccses,
+  logoutError,
 } from "./auth-actions";
 
-let token = "";
+// import { persistor } from "../store";
+
+// let token = "";
 
 // const token = {
 //   set(token) {
@@ -15,7 +23,7 @@ let token = "";
 //   },
 // };
 
-const BASE_URL1 = "https://connections-api.herokuapp.com";
+const BASE_URL = "https://connections-api.herokuapp.com";
 
 //====================== Register ======================
 export const register = (credentials) => async (dispatch) => {
@@ -29,12 +37,54 @@ export const register = (credentials) => async (dispatch) => {
 
   dispatch(registerRequest());
   try {
-    const response = await fetch(BASE_URL1 + "/users/signup", options);
+    const response = await fetch(BASE_URL + "/users/signup", options);
     const data = await response.json();
-    token = data.token;
     dispatch(registerSuccses(data));
-    // return data;
   } catch (error) {
     dispatch(registerError(error));
+  }
+};
+
+//====================== Login ======================
+export const login = (credentials) => async (dispatch) => {
+  const options = {
+    method: "POST",
+    body: JSON.stringify(credentials),
+    headers: {
+      "Content-Type": "application/json; charset=UTF-8",
+    },
+  };
+
+  dispatch(loginRequest());
+  try {
+    const response = await fetch(BASE_URL + "/users/login", options);
+    const data = await response.json();
+    dispatch(loginSuccses(data));
+  } catch (error) {
+    dispatch(loginError(error));
+  }
+};
+
+//====================== logout ======================
+export const logout = (credentials) => async (dispatch) => {
+  const token = localStorage.getItem("persist:auth").slice(12, 161);
+
+  const options = {
+    method: "POST",
+    body: JSON.stringify(credentials),
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json; charset=UTF-8",
+    },
+  };
+
+  dispatch(logoutRequest());
+  try {
+    const response = await fetch(BASE_URL + "/users/logout", options);
+    const data = await response.json();
+    console.log(data);
+    dispatch(logoutSuccses(data));
+  } catch (error) {
+    dispatch(logoutError(error));
   }
 };
