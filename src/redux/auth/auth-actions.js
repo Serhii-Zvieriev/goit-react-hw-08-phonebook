@@ -11,3 +11,11 @@ export const loginError = createAction("auth/loginError");
 export const logoutRequest = createAction("auth/logoutRequest");
 export const logoutSuccses = createAction("auth/logoutSuccses");
 export const logoutError = createAction("auth/logoutError");
+
+export const fetchCurrentUserRequest = createAction(
+  "auth/fetchCurrentUserRequest"
+);
+export const fetchCurrentUserSuccses = createAction(
+  "auth/fetchCurrentUserSuccses"
+);
+export const fetchCurrentUserError = createAction("auth/fetchCurrentUserError");

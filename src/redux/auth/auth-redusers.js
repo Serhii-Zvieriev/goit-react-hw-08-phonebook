@@ -11,6 +11,9 @@ import {
   logoutRequest,
   logoutSuccses,
   logoutError,
+  fetchCurrentUserRequest,
+  fetchCurrentUserSuccses,
+  fetchCurrentUserError,
 } from "./auth-actions";
 
 // const initialState = {
@@ -23,10 +26,9 @@ export const userReducer = createReducer(
   { name: null, email: null },
   {
     [registerSuccses]: (_, action) => action.payload.user,
-    [loginSuccses]: (_, action) => action.payload.user,
-    [logoutSuccses]: () => ({ name: null, email: null }),
-    // state.token = action.payload.token;
-    // state.isLoggedIn = true;
+    [loginSuccses]: (_, action) => action.payload,
+    [logoutSuccses]: () => ({ user: { name: null, email: null }, token: "" }),
+    [fetchCurrentUserSuccses]: (_, action) => action.payload,
   }
 );
 
@@ -48,10 +50,21 @@ const isLoggedIn = createReducer(false, {
   [logoutRequest]: () => true,
   [logoutSuccses]: () => false,
   [logoutError]: () => true,
+
+  [fetchCurrentUserRequest]: () => false,
+  [fetchCurrentUserSuccses]: () => true,
+  [fetchCurrentUserError]: () => false,
+});
+
+const isFetchingCurrent = createReducer(false, {
+  [fetchCurrentUserRequest]: () => true,
+  [fetchCurrentUserSuccses]: () => false,
+  [fetchCurrentUserError]: () => false,
 });
 
 export const authReducer = combineReducers({
   user: userReducer,
   token: tokenReduser,
   isLoggedIn,
+  isFetchingCurrent,
 });

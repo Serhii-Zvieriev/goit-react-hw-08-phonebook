@@ -2,14 +2,16 @@ import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/auth/auth-operetions";
 
-import { getIsLoggedIn } from "../../redux/auth/auth-selectors";
+import { getIsLoggedIn, getToken } from "../../redux/auth/auth-selectors";
 
 import { activeLink, link } from "./Navigation.module.css";
 
 const Navigation = () => {
   const isLoggedIn = useSelector(getIsLoggedIn);
+  const token = useSelector(getToken);
+
   const dispatch = useDispatch();
-  const onClick = () => dispatch(logout());
+  const onClick = () => dispatch(logout(token));
   return (
     <nav>
       {!isLoggedIn && (
